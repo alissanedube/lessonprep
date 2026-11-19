@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Sign up{% endblock %}
+{% block content %}
+<section class="form-page">
+  <h1>Create your account</h1>
+  <form id="register-form" action="{{ url_for('register') }}" method="post" novalidate>
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" maxlength="60" required
+             autocomplete="name" value="{{ form.get('name', '') }}">
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" maxlength="120" required
+             autocomplete="email" value="{{ form.get('email', '') }}">
+      <p class="hint" id="email-hint" aria-live="polite"></p>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" minlength="8" required
+             autocomplete="new-password" aria-describedby="password-hint">
+      <p class="hint" id="password-hint" aria-live="polite">At least 8 characters.</p>
+    </div>
+    <div class="field">
+      <label for="confirm">Confirm password</label>
+      <input type="password" id="confirm" name="confirm" required
+             autocomplete="new-password" aria-describedby="confirm-hint">
+      <p class="hint" id="confirm-hint" aria-live="polite"></p>
+    </div>
+    <button type="submit" class="button">Sign up</button>
+  </form>
+  <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}

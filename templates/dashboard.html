@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="dashboard">
+  <h1>Hello, {{ tutor.name }}</h1>
+  <p class="share">
+    Your public profile:
+    <a href="{{ url_for('public_profile', tutor_id=tutor.id) }}">{{ url_for('public_profile', tutor_id=tutor.id, _external=True) }}</a>
+  </p>
+
+  <div class="dashboard-layout">
+    <!-- Left column: students -->
+    <section class="panel" aria-labelledby="students-title">
+      <h2 id="students-title">My students (<span id="student-count">{{ students|length }}</span>)</h2>
+
+      {% if students %}
+        <div class="filters">
+          <div>
+            <label for="search">Search by name</label>
+            <input type="search" id="search" placeholder="e.g. Marie">
+          </div>
+          <div>
+            <label for="language-filter">Language</label>
+            <select id="language-filter">
+              <option value="">All languages</option>
+              {% for lang in languages %}
+                <option value="{{ lang|lower }}">{{ lang }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <ul class="student-list" id="student-list">
+          {% for s in students %}
+            <li class="student-card" data-name="{{ s.name|lower }}" data-language="{{ s.language|lower }}">
+              <h3>{{ s.name }}</h3>
+              <p>{{ s.language }} · <span class="badge">{{ s.level }}</span></p>
+              {% if s.goal %}<p class="goal">Goal: {{ s.goal }}</p>{% endif %}
+            </li>
+          {% endfor %}
+        </ul>
+        <p id="no-results" class="empty" hidden>No student matches your search.</p>
+      {% else %}
+        <p class="empty">No students yet. Add your first one with the form.</p>
+      {% endif %}
+    </section>
+
+    <!-- Right column: forms -->
+    <div class="side">
+      <section class="panel" aria-labelledby="add-title">
+        <h2 id="add-title">Add a student</h2>
+        <form action="{{ url_for('add_student') }}" method="post">
+          <div class="field">
+            <label for="student-name">Name</label>
+            <input type="text" id="student-name" name="name" maxlength="60" required>
+          </div>
+          <div class="field">
+            <label for="language">Language learned</label>
+            <input type="text" id="language" name="language" maxlength="40" required
+                   placeholder="e.g. French">
+          </div>
+          <div class="field">
+            <label for="level">Level</label>
+            <select id="level" name="level" required>
+              {% for lvl in levels %}
+                <option value="{{ lvl }}">{{ lvl }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="goal">Learning goal</label>
+            <input type="text" id="goal" name="goal" maxlength="200"
+                   placeholder="e.g. Speak confidently with friends">
+          </div>
+          <button type="submit" class="button">Add student</button>
+        </form>
+      </section>
+
+      <section class="panel" aria-labelledby="requests-title">
+        <h2 id="requests-title">Trial requests ({{ requests|length }})</h2>
+        {% if requests %}
+          <ul class="request-list">
+            {% for r in requests|reverse %}
+              <li>
+                <strong>{{ r.name }}</strong> · <a href="mailto:{{ r.email }}">{{ r.email }}</a>
+                <p>{{ r.message }}</p>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="empty">No requests yet. Share your public profile link.</p>
+        {% endif %}
+      </section>
+
+      <details class="panel">
+        <summary><h2>Edit my public profile</h2></summary>
+        <form action="{{ url_for('edit_profile') }}" method="post">
+          <div class="field">
+            <label for="languages">Languages taught</label>
+            <input type="text" id="languages" name="languages" maxlength="100"
+                   value="{{ tutor.profile.languages }}" placeholder="e.g. French and Spanish">
+          </div>
+          <fieldset class="field">
+            <legend>Levels taught</legend>
+            {% for lvl in levels %}
+              <label class="inline">
+                <input type="checkbox" name="levels" value="{{ lvl }}"
+                       {% if lvl in tutor.profile.levels %}checked{% endif %}> {{ lvl }}
+              </label>
+            {% endfor %}
+          </fieldset>
+          <div class="field">
+            <label for="philosophy">Teaching approach</label>
+            <textarea id="philosophy" name="philosophy" rows="4" maxlength="500">{{ tutor.profile.philosophy }}</textarea>
+          </div>
+          <button type="submit" class="button">Save profile</button>
+        </form>
+      </details>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

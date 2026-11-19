@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ tutor.name }}{% endblock %}
+{% block content %}
+<article class="public-profile">
+  <header class="profile-header">
+    <h1>{{ tutor.name }}</h1>
+    {% if tutor.profile.languages %}
+      <p class="profile-languages">Teaches {{ tutor.profile.languages }}</p>
+    {% endif %}
+    {% if tutor.profile.levels %}
+      <p>
+        {% for lvl in tutor.profile.levels %}<span class="badge">{{ lvl }}</span> {% endfor %}
+      </p>
+    {% endif %}
+  </header>
+
+  <div class="dashboard-layout">
+    <section class="panel" aria-labelledby="about-title">
+      <h2 id="about-title">My teaching approach</h2>
+      {% if tutor.profile.philosophy %}
+        <p class="philosophy">{{ tutor.profile.philosophy }}</p>
+      {% else %}
+        <p class="empty">This tutor has not written their approach yet.</p>
+      {% endif %}
+    </section>
+
+    <section class="panel" aria-labelledby="trial-title">
+      <h2 id="trial-title">Request a trial lesson</h2>
+      <form action="{{ url_for('public_profile', tutor_id=tutor.id) }}" method="post">
+        <div class="field">
+          <label for="name">Your name</label>
+          <input type="text" id="name" name="name" maxlength="60" required
+                 autocomplete="name" value="{{ form.get('name', '') }}">
+        </div>
+        <div class="field">
+          <label for="email">Your email</label>
+          <input type="email" id="email" name="email" maxlength="120" required
+                 autocomplete="email" value="{{ form.get('email', '') }}">
+        </div>
+        <div class="field">
+          <label for="message">What would you like to work on?</label>
+          <textarea id="message" name="message" rows="4" maxlength="1000" required>{{ form.get('message', '') }}</textarea>
+        </div>
+        <button type="submit" class="button">Send request</button>
+      </form>
+    </section>
+  </div>
+</article>
+{% endblock %}

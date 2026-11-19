@@ -1,0 +1,268 @@
+/* ---------- Base ---------- */
+:root {
+  --ink: #1f2933;
+  --muted: #5f6c7b;
+  --paper: #fbf8f3;
+  --card: #ffffff;
+  --accent: #2f5d50;
+  --accent-light: #e3efe9;
+  --error: #b42318;
+  --error-light: #fdecea;
+  --success-light: #e3efe9;
+  --border: #e2ddd5;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+h1, h2, h3 { line-height: 1.2; }
+a { color: var(--accent); }
+
+/* ---------- Header / footer ---------- */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--accent);
+}
+
+.site-header ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.site-footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.875rem;
+  padding: 1rem;
+}
+
+/* ---------- Buttons ---------- */
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.6rem 1.1rem;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.button:hover { opacity: 0.9; }
+.button-large { padding: 0.9rem 1.6rem; font-size: 1.1rem; }
+
+.link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---------- Landing page ---------- */
+.hero {
+  text-align: center;
+  padding: 2.5rem 0 2rem;
+}
+.hero h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 6vw, 3.25rem);
+  margin-bottom: 0.5rem;
+}
+.hero p {
+  max-width: 38rem;
+  margin: 0 auto 1.5rem;
+  color: var(--muted);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.card, .panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+/* ---------- Forms ---------- */
+.form-page { max-width: 420px; margin: 0 auto; }
+
+.field { margin-bottom: 1rem; }
+.field label { display: block; font-weight: 600; margin-bottom: 0.25rem; }
+.field input,
+.field select,
+#search {
+  width: 100%;
+  padding: 0.6rem;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+.field input:focus, #search:focus { outline: 2px solid var(--accent); }
+
+.hint { margin: 0.25rem 0 0; font-size: 0.875rem; color: var(--muted); }
+.hint.ok { color: var(--accent); }
+.hint.bad { color: var(--error); }
+input.invalid { border-color: var(--error); }
+
+/* ---------- Flash messages ---------- */
+.flash {
+  padding: 0.6rem 0.9rem;
+  border-radius: 6px;
+  margin: 0 0 0.5rem;
+}
+.flash-error { background: var(--error-light); color: var(--error); }
+.flash-success { background: var(--success-light); color: var(--accent); }
+
+/* ---------- Dashboard ---------- */
+.dashboard-layout {
+  display: grid;
+  grid-template-columns: 1fr;   /* phone: one column */
+  align-items: start;
+  gap: 1rem;
+}
+
+.panel-header h2 { margin-top: 0; }
+
+.student-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.student-card {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+.student-card h3 { margin: 0 0 0.25rem; font-size: 1.05rem; }
+.student-card p { margin: 0; color: var(--muted); }
+
+.badge {
+  display: inline-block;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 0 0.5rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.empty { color: var(--muted); font-style: italic; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Wider screens: student list on the left, form on the right */
+@media (min-width: 768px) {
+  .dashboard-layout { grid-template-columns: 2fr 1fr; }
+}
+
+/* ---------- LessonPrep additions ---------- */
+.field textarea {
+  width: 100%;
+  padding: 0.6rem;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  resize: vertical;
+}
+.field textarea:focus, .filters select:focus { outline: 2px solid var(--accent); }
+
+fieldset.field { border: none; padding: 0; margin: 0 0 1rem; }
+fieldset.field legend { font-weight: 600; margin-bottom: 0.25rem; padding: 0; }
+label.inline { display: inline-flex; align-items: center; gap: 0.25rem; margin-right: 0.75rem; font-weight: normal; }
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+.filters label { display: block; font-weight: 600; font-size: 0.875rem; }
+.filters select {
+  width: 100%;
+  padding: 0.6rem;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: #fff;
+}
+@media (min-width: 500px) {
+  .filters { grid-template-columns: 2fr 1fr; }
+}
+
+.goal { font-size: 0.9rem; margin-top: 0.25rem !important; }
+.share { color: var(--muted); overflow-wrap: anywhere; }
+
+.side { display: grid; gap: 1rem; align-content: start; }
+
+.request-list { list-style: none; padding: 0; margin: 0; }
+.request-list li { border-top: 1px solid var(--border); padding: 0.5rem 0; overflow-wrap: anywhere; }
+.request-list p { margin: 0.25rem 0 0; }
+
+details.panel summary { cursor: pointer; }
+details.panel summary h2 { display: inline; font-size: 1.25rem; }
+details.panel[open] summary { margin-bottom: 1rem; }
+
+.profile-header { text-align: center; margin-bottom: 1.5rem; }
+.profile-header h1 { font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 2.75rem); margin-bottom: 0.25rem; }
+.profile-languages { color: var(--muted); font-size: 1.1rem; margin: 0 0 0.5rem; }
+.philosophy { white-space: pre-line; }
+.dashboard-layout > .panel h2, .side .panel h2 { margin-top: 0; }
+
+/* Checkboxes keep their natural size (the .field input rule above sets width: 100%) */
+.field input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+}

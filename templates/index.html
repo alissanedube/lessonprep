@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Prepare every lesson faster{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Know what to teach next.</h1>
+  <p>LessonPrep helps independent language tutors prepare personalized lessons
+     faster. Each student's goal, recurring difficulties and next steps,
+     together in one private view.</p>
+  <a class="button button-large" href="{{ url_for('register') }}">Create your free account</a>
+</section>
+
+<section class="features" aria-labelledby="features-title">
+  <h2 id="features-title">Built around one decision</h2>
+  <div class="card-grid">
+    <article class="card">
+      <h3>Student profiles</h3>
+      <p>Language, CEFR level and the learner's own goal, always in view.</p>
+    </article>
+    <article class="card">
+      <h3>Recurring difficulties</h3>
+      <p>A difficulty seen in two lessons is highlighted, so you notice it before class.</p>
+    </article>
+    <article class="card">
+      <h3>A public profile</h3>
+      <p>Share one link on Preply or Instagram. New students can request a trial lesson, no account needed.</p>
+    </article>
+  </div>
+</section>
+{% endblock %}
